@@ -109,7 +109,8 @@ namespace FitTrackAPI
 					policy.WithOrigins(
 						"http://localhost:3000",
 						"http://localhost:5173",
-						"http://localhost:5174"
+						"http://localhost:5174",
+						"https://lively-rock-0b7856200.4.azurestaticapps.net"
 						)
 					.AllowAnyHeader()
 					.AllowAnyMethod()
