@@ -25,7 +25,6 @@ namespace FitTrackAPI
 			options.UseSqlServer(builder.Configuration.GetConnectionString("DataContext")
 			?? throw new InvalidOperationException("Connection string 'DataContext' not found.")));
 
-			//Add identity services to DI. (Enables UserManager, SignInManager)
 			builder.Services.AddIdentity<AppUser, IdentityRole<int>>(options =>
 			{
 				options.User.RequireUniqueEmail = true;
@@ -59,7 +58,6 @@ namespace FitTrackAPI
 				};
 			});
 
-			// Add services to the container.
 			builder.Services.AddScoped<IExerciseRepository, ExerciseRepository>();
 			builder.Services.AddScoped<IMuscleGroupRepository, MuscleGroupRepository>();
 			builder.Services.AddScoped<IHealthDeclarationRepository, HealthDeclarationRepository>();
@@ -69,6 +67,7 @@ namespace FitTrackAPI
 			builder.Services.AddScoped<IMealRepository, MealRepository>();
 			builder.Services.AddScoped<TokenService>();
 			builder.Services.AddHostedService<ResetPlansCompletedService>();
+			builder.Services.AddHostedService<ResetMealsCompletedService>();
 
 			builder.Services.AddControllers();
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -121,6 +120,17 @@ namespace FitTrackAPI
 			var app = builder.Build();
 
 			app.UseCors(corsPolicy);
+
+			using (var scope = app.Services.CreateScope())
+			{
+				try
+				{
+					var context = scope.ServiceProvider.GetService<AppDbContext>();
+					context.Database.Migrate();
+				}
+				catch (Exception ex) {
+					Console.WriteLine("Error message:" + ex.Message);
+				}
 
 			// Configure the HTTP request pipeline.
 			if (app.Environment.IsDevelopment())
