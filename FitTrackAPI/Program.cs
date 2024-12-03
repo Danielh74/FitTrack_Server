@@ -125,7 +125,7 @@ namespace FitTrackAPI
 			{
 				try
 				{
-					var context = scope.ServiceProvider.GetService<AppDbContext>();
+					var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 					context.Database.Migrate();
 				}
 				catch (Exception ex)
