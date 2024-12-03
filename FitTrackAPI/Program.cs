@@ -128,9 +128,11 @@ namespace FitTrackAPI
 					var context = scope.ServiceProvider.GetService<AppDbContext>();
 					context.Database.Migrate();
 				}
-				catch (Exception ex) {
+				catch (Exception ex)
+				{
 					Console.WriteLine("Error message:" + ex.Message);
 				}
+			}
 
 			// Configure the HTTP request pipeline.
 			if (app.Environment.IsDevelopment())
