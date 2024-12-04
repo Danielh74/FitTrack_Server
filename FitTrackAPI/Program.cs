@@ -1,4 +1,3 @@
-
 using DAL.Data;
 using DAL.Interfaces;
 using DAL.Models;
@@ -10,7 +9,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Security.Claims;
 using System.Text;
 
 namespace FitTrackAPI

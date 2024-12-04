@@ -1,12 +1,10 @@
 ﻿using DAL.Helpers;
 using DAL.Interfaces;
 using DAL.Models;
-using FitTrackAPI.DTOs.Exercise;
+using FitTrackAPI.DTOs.ExerciseDTOs;
 using FitTrackAPI.Mappers;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Runtime.CompilerServices;
 
 namespace FitTrackAPI.Controllers
 {

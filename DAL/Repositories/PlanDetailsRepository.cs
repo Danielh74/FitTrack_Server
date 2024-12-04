@@ -1,9 +1,7 @@
 ﻿using DAL.Data;
-using DAL.Helpers;
 using DAL.Interfaces;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace DAL.Repositories
 {

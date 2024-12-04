@@ -1,7 +1,6 @@
 ﻿using DAL.Data;
 using DAL.Interfaces;
 using DAL.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories

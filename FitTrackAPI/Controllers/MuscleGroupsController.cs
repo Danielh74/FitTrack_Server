@@ -1,9 +1,8 @@
 ﻿using DAL.Helpers;
 using DAL.Interfaces;
-using FitTrackAPI.DTOs.MuscleGroup;
+using FitTrackAPI.DTOs.MuscleGroupDTOs;
 using FitTrackAPI.Mappers;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitTrackAPI.Controllers

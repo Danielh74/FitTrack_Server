@@ -1,9 +1,6 @@
-﻿using DAL.Models;
-using FitTrackAPI.DTOs.Health_Declaration;
-using FitTrackAPI.DTOs.MenuDTOs;
+﻿using FitTrackAPI.DTOs.MenuDTOs;
 using FitTrackAPI.DTOs.PlanDTOs;
 using FitTrackAPI.DTOs.WeightDTOs;
-using System.ComponentModel.DataAnnotations;
 
 namespace FitTrackAPI.DTOs.AccountDTOs
 {

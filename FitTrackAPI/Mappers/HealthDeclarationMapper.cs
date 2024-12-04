@@ -1,5 +1,5 @@
 ﻿using DAL.Models;
-using FitTrackAPI.DTOs.Health_Declaration;
+using FitTrackAPI.DTOs.HealthDeclarationDTOs;
 using FitTrackAPI.Helpers;
 
 namespace FitTrackAPI.Mappers

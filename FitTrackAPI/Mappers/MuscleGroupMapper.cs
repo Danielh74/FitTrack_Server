@@ -1,5 +1,5 @@
 ﻿using DAL.Models;
-using FitTrackAPI.DTOs.MuscleGroup;
+using FitTrackAPI.DTOs.MuscleGroupDTOs;
 
 namespace FitTrackAPI.Mappers
 {

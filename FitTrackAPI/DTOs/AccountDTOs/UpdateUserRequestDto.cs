@@ -1,6 +1,4 @@
-﻿using DAL.Models;
-using FitTrackAPI.DTOs.WeightDTOs;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace FitTrackAPI.DTOs.AccountDTOs
 {

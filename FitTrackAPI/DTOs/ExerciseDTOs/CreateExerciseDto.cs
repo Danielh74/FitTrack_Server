@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FitTrackAPI.DTOs.Exercise
+namespace FitTrackAPI.DTOs.ExerciseDTOs
 {
 	public class CreateExerciseDto
 	{
@@ -11,5 +11,5 @@ namespace FitTrackAPI.DTOs.Exercise
 		[Required]
 		[MinLength(2), MaxLength(20)]
 		public string MuscleGroupName { get; set; } = string.Empty;
-    }
+	}
 }

@@ -5,11 +5,9 @@ using FitTrackAPI.Helpers;
 using FitTrackAPI.Mappers;
 using FitTrackAPI.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 
 namespace FitTrackAPI.Controllers;

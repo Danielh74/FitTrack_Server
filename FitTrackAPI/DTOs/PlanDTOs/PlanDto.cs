@@ -1,5 +1,4 @@
-﻿using DAL.Models;
-using FitTrackAPI.DTOs.PlanDetailsDTOs;
+﻿using FitTrackAPI.DTOs.PlanDetailsDTOs;
 
 namespace FitTrackAPI.DTOs.PlanDTOs
 {

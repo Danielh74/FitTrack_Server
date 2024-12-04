@@ -1,6 +1,6 @@
 ﻿using DAL.Interfaces;
 using DAL.Models;
-using FitTrackAPI.DTOs.Exercise;
+using FitTrackAPI.DTOs.ExerciseDTOs;
 
 namespace FitTrackAPI.Mappers
 {

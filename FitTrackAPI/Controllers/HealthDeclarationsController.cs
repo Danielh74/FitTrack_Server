@@ -1,9 +1,8 @@
 ﻿using DAL.Interfaces;
 using DAL.Models;
-using FitTrackAPI.DTOs.Health_Declaration;
+using FitTrackAPI.DTOs.HealthDeclarationDTOs;
 using FitTrackAPI.Mappers;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

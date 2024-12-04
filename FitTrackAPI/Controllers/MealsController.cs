@@ -1,9 +1,7 @@
 ﻿using DAL.Interfaces;
-using DAL.Models;
 using FitTrackAPI.DTOs.MealDTOs;
 using FitTrackAPI.Mappers;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitTrackAPI.Controllers

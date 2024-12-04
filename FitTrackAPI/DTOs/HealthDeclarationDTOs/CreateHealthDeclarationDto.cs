@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FitTrackAPI.DTOs.Health_Declaration
+namespace FitTrackAPI.DTOs.HealthDeclarationDTOs
 {
 	public class CreateHealthDeclarationDto
 	{

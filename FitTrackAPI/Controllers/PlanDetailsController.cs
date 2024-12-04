@@ -1,11 +1,8 @@
 ﻿using DAL.Interfaces;
 using FitTrackAPI.DTOs.PlanDetailsDTOs;
-using DAL.Helpers;
 using FitTrackAPI.Mappers;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
 
 namespace FitTrackAPI.Controllers
 {
