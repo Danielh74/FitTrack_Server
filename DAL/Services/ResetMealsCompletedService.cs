@@ -34,7 +34,7 @@ namespace DAL.Services
 
 					if (meals.Count == 0)
 					{
-						logger.LogInformation("No plans found to reset.");
+						logger.LogInformation("No meals found to reset.");
 					}
 
 					foreach (var meal in meals)
