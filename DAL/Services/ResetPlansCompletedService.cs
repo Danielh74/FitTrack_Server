@@ -14,11 +14,7 @@ namespace DAL.Services
 			while (!stoppingToken.IsCancellationRequested)
 			{
 				var now = DateTime.UtcNow;
-				var nextSunday = now.AddDays(((int)DayOfWeek.Sunday - (int)now.DayOfWeek + 7) % 7);
-				var tomorrow = now.AddDays(1);
-				tomorrow = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 0, 0, 0, DateTimeKind.Utc);
-				nextSunday = new DateTime(nextSunday.Year, nextSunday.Month, nextSunday.Day, 0, 0, 0, DateTimeKind.Utc);
-
+				var nextSunday = now.Date.AddDays((7 - (int)now.DayOfWeek) % 7);
 				var delay = nextSunday - now;
 
 				if (delay.TotalMilliseconds < 0)

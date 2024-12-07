@@ -13,8 +13,7 @@ namespace DAL.Services
 			while (!stoppingToken.IsCancellationRequested)
 			{
 				var now = DateTime.UtcNow;
-				var tomorrow = now.AddDays(1);
-				tomorrow = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 0, 0, 0, DateTimeKind.Utc);
+				var tomorrow = now.Date.AddDays(1);
 
 				var delay = tomorrow - now;
 
