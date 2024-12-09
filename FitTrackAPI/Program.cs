@@ -64,8 +64,9 @@ namespace FitTrackAPI
 			builder.Services.AddScoped<IMenuRepository, MenuRepository>();
 			builder.Services.AddScoped<IMealRepository, MealRepository>();
 			builder.Services.AddScoped<TokenService>();
+			var connectionString = Environment.GetEnvironmentVariable("AZURE_BLOB_STORAGE_CONNECTION_STRING");
 			builder.Services.AddSingleton(new BlobStorageService(
-				builder.Configuration.GetConnectionString("AzureBlobStorage")));
+				builder.Configuration.GetConnectionString(connectionString)));
 			builder.Services.AddHostedService<ResetPlansCompletedService>();
 			builder.Services.AddHostedService<ResetMealsCompletedService>();
 
