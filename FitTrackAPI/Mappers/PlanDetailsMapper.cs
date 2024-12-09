@@ -12,6 +12,7 @@ namespace FitTrackAPI.Mappers
 				Id = model.Id,
 				OrderInPlan = model.OrderInPlan,
 				ExerciseName = model.Exercise.Name,
+				VideoURL = model.Exercise.VideoURL,
 				Reps = model.Reps,
 				Sets = model.Sets,
 				CurrentWeight = model.CurrentWeight,

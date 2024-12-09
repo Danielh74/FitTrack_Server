@@ -11,5 +11,7 @@ namespace FitTrackAPI.DTOs.ExerciseDTOs
 		[Required]
 		[MinLength(2), MaxLength(20)]
 		public string MuscleGroupName { get; set; } = string.Empty;
+
+		public IFormFile? VideoFile { get; set; }
 	}
 }

@@ -24,24 +24,14 @@ namespace DAL.Repositories
 			return muscleGroup;
 		}
 
-		public async Task<List<MuscleGroup>> GetAllAsync(QueryObject query)
+		public async Task<List<MuscleGroup>> GetAllAsync()
 		{
-			var muscleGroups = context.MuscleGroups.Include(m => m.Exercises).AsQueryable();
-
-			if (!string.IsNullOrWhiteSpace(query.Name))
-			{
-				muscleGroups = muscleGroups.Where(e => e.Name.Contains(query.Name));
-			}
-			if (!string.IsNullOrWhiteSpace(query.SortBy))
-			{
-				if (query.SortBy.Equals("Name", StringComparison.OrdinalIgnoreCase))
-				{
-					muscleGroups = query.IsDecsending ? muscleGroups.OrderByDescending(e => e.Name)
-						: muscleGroups.OrderBy(e => e.Name);
-				}
+			var muscleGroups = await context.MuscleGroups.Include(m => m.Exercises).ToListAsync();
+			if (muscleGroups.Count == 0) {
+				return null;
 			}
 
-			return await muscleGroups.ToListAsync();
+			return  muscleGroups;
 		}
 
 		public async Task<MuscleGroup?> GetByIdAsync(int id)
@@ -60,11 +50,6 @@ namespace DAL.Repositories
 			return muscleGroup;
 		}
 
-		public async Task<bool> MuscleGroupExist(string name)
-		{
-			return await context.MuscleGroups.AnyAsync(m => m.Name == name);
-		}
-
 		public async Task<MuscleGroup?> UpdateAsync(int id, MuscleGroup updatedMuscleGroup)
 		{
 			var currentMuscleGroup = await context.MuscleGroups.FindAsync(id);
@@ -73,7 +58,7 @@ namespace DAL.Repositories
 				return null;
 			}
 
-			if(await MuscleGroupExist(updatedMuscleGroup.Name))
+			if(await GetByNameAsync(updatedMuscleGroup.Name) is not null)
 			{
 				return null;
 			}

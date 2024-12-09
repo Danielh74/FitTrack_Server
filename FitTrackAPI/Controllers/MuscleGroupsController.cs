@@ -13,14 +13,14 @@ namespace FitTrackAPI.Controllers
 	public class MuscleGroupsController(IMuscleGroupRepository repo) : ControllerBase
 	{
 		[HttpGet("admin")]
-		public async Task<IActionResult> GetAll([FromQuery] QueryObject query)
+		public async Task<IActionResult> GetAll()
 		{
 			if (!ModelState.IsValid)
 			{
 				return BadRequest(ModelState);
 			}
 
-			var muscleGroups = await repo.GetAllAsync(query);
+			var muscleGroups = await repo.GetAllAsync();
 
 			return Ok(muscleGroups.Select(m => m.ToDto()).ToList());
 		}
@@ -53,7 +53,7 @@ namespace FitTrackAPI.Controllers
 			var updatedMuscleGroup = await repo.UpdateAsync(id,mgDto.ToModelFromUpdate());
 			if(updatedMuscleGroup is null)
 			{
-				return NoContent();
+				return BadRequest("Can't update muscle group due to a bad input");
 			}
 
 			return Ok(updatedMuscleGroup.ToDto());

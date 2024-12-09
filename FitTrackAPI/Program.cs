@@ -61,9 +61,11 @@ namespace FitTrackAPI
 			builder.Services.AddScoped<IHealthDeclarationRepository, HealthDeclarationRepository>();
 			builder.Services.AddScoped<IPlanRepository, PlanRepository>();
 			builder.Services.AddScoped<IPlanDetailsRepository, PlanDetailsRepository>();
-			builder.Services.AddScoped<IMenuRepository,MenuRepository>();
+			builder.Services.AddScoped<IMenuRepository, MenuRepository>();
 			builder.Services.AddScoped<IMealRepository, MealRepository>();
 			builder.Services.AddScoped<TokenService>();
+			builder.Services.AddSingleton(new BlobStorageService(
+				builder.Configuration.GetConnectionString("AzureBlobStorage")));
 			builder.Services.AddHostedService<ResetPlansCompletedService>();
 			builder.Services.AddHostedService<ResetMealsCompletedService>();
 
@@ -71,20 +73,20 @@ namespace FitTrackAPI
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
-					builder.Services.AddSwaggerGen(option =>
-					{
-						option.SwaggerDoc("v1", new OpenApiInfo { Title = "Demo API", Version = "v1" });
-						option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-						{
-							In = ParameterLocation.Header,
-							Description = "Please enter a valid token",
-							Name = "Authorization",
-							Type = SecuritySchemeType.Http,
-							BearerFormat = "JWT",
-							Scheme = "Bearer"
-						});
-						option.AddSecurityRequirement(new OpenApiSecurityRequirement
+			builder.Services.AddSwaggerGen(option =>
 			{
+				option.SwaggerDoc("v1", new OpenApiInfo { Title = "Demo API", Version = "v1" });
+				option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+				{
+					In = ParameterLocation.Header,
+					Description = "Please enter a valid token",
+					Name = "Authorization",
+					Type = SecuritySchemeType.Http,
+					BearerFormat = "JWT",
+					Scheme = "Bearer"
+				});
+				option.AddSecurityRequirement(new OpenApiSecurityRequirement
+	{
 				{
 					new OpenApiSecurityScheme
 					{
@@ -96,8 +98,8 @@ namespace FitTrackAPI
 					},
 					new string[]{}
 				}
+	});
 			});
-					});
 
 			var corsPolicy = "CorsPolicy";
 			builder.Services.AddCors(options =>
@@ -136,8 +138,8 @@ namespace FitTrackAPI
 			// Configure the HTTP request pipeline.
 			//if (app.Environment.IsDevelopment())
 			//{
-				app.UseSwagger();
-				app.UseSwaggerUI();
+			app.UseSwagger();
+			app.UseSwaggerUI();
 			//}
 
 			app.UseHttpsRedirection();

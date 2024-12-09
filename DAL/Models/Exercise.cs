@@ -6,11 +6,11 @@ namespace DAL.Models;
 	{
     [Key]
     public int Id { get; set; }
-
     public string Name { get; set; } = string.Empty;
+	public string VideoURL { get; set; } = string.Empty;
 
-    //Foreign key:
-    public int MuscleGroupId { get; set; }
+	//Foreign key:
+	public int MuscleGroupId { get; set; }
 
     //Navigation property:
     public List<PlanDetails> PlanDetails { get; set; } = [];

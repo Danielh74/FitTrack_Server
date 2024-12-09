@@ -5,6 +5,7 @@
         public int Id { get; set; }
         public int? OrderInPlan { get; set; }
 		public string ExerciseName { get; set;} = string.Empty;
+		public string VideoURL { get; set; } = string.Empty;
 		public int? Reps { get; set; }
 		public int? Sets { get; set; }
 		public double? CurrentWeight { get; set; }

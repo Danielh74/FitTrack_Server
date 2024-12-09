@@ -3,6 +3,7 @@ using DAL.Helpers;
 using DAL.Interfaces;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace DAL.Repositories
 {
@@ -24,24 +25,15 @@ namespace DAL.Repositories
 			return exerciseModel;
 		}
 
-		public async Task<List<Exercise>> GetAllAsync(QueryObject query)
+		public async Task<List<Exercise>> GetAllAsync()
 		{
-			var exercises = context.Exercises.Include(e => e.MuscleGroup).AsQueryable();
-
-			if (!string.IsNullOrWhiteSpace(query.Name))
+			var exercises = await context.Exercises.Include(e => e.MuscleGroup).ToListAsync();
+			if(exercises.Count == 0)
 			{
-				exercises = exercises.Where(e => e.Name.Contains(query.Name));
-			}
-			if (!string.IsNullOrWhiteSpace(query.SortBy))
-			{
-				if (query.SortBy.Equals("Name", StringComparison.OrdinalIgnoreCase))
-				{
-					exercises = query.IsDecsending ? exercises.OrderByDescending(e => e.Name)
-						: exercises.OrderBy(e => e.Name);
-				}
+				return null;
 			}
 
-			return await exercises.ToListAsync();
+			return  exercises;
 		}
 
 		public async Task<Exercise?> GetByIdAsync(int id)
@@ -63,13 +55,6 @@ namespace DAL.Repositories
 			return exercise;
 		}
 
-		public async Task<bool> IsExists(string name)
-		{
-			var isExist = await context.Exercises.AnyAsync(e => e.Name == name);
-
-			return isExist;
-		}
-
 		public async Task<Exercise?> UpdateAsync(int id, Exercise updatedExercise)
 		{
 			var currentExercise = await context.Exercises.FindAsync(id);
@@ -80,6 +65,10 @@ namespace DAL.Repositories
 
 			currentExercise.Name = updatedExercise.Name;
 			currentExercise.MuscleGroupId = updatedExercise.MuscleGroupId;
+			if(!string.IsNullOrEmpty(updatedExercise.VideoURL))
+			{
+				currentExercise.VideoURL = updatedExercise.VideoURL;
+			}
 
 			await context.SaveChangesAsync();
 

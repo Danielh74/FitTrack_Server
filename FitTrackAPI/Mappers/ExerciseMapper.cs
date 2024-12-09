@@ -12,29 +12,29 @@ namespace FitTrackAPI.Mappers
 			{
 				Id = exerciseModel.Id,
 				Name = exerciseModel.Name,
-				MuscleGroupName = exerciseModel.MuscleGroup.Name
+				MuscleGroupName = exerciseModel.MuscleGroup.Name,
+				VideoURL = exerciseModel.VideoURL
 			};
 		}
 
-		public static async Task<Exercise> ToModelFromCreate(this CreateExerciseDto exerciseDto, IMuscleGroupRepository repo)
+		public static Exercise ToModelFromCreate(this CreateExerciseDto exerciseDto, int muscleGroupId, string videoUrl)
 		{
-			var muscleGroup = await repo.GetByNameAsync(exerciseDto.MuscleGroupName);
+			return new Exercise
+			{
+				Name = exerciseDto.Name,
+				MuscleGroupId = muscleGroupId,
+				VideoURL = videoUrl
+			};
+		}
+
+		public static Exercise  ToModelFromUpdate(this UpdateExerciseRequestDto exerciseDto, int muscleGroupId, string videoUrl)
+		{
 
 			return new Exercise
 			{
 				Name = exerciseDto.Name,
-				MuscleGroupId = muscleGroup.Id
-			};
-		}
-
-		public static async Task<Exercise>  ToModelFromUpdate(this UpdateExerciseRequestDto exerciseDto, IMuscleGroupRepository repo)
-		{
-			var muscleGroup = await repo.GetByNameAsync(exerciseDto.MuscleGroupName);
-
-			return new Exercise
-			{
-				Name = exerciseDto.Name,
-				MuscleGroupId = muscleGroup.Id
+				MuscleGroupId = muscleGroupId,
+				VideoURL = videoUrl
 			};
 		}
 	}

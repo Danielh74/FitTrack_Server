@@ -3,6 +3,7 @@ using DAL.Interfaces;
 using DAL.Models;
 using FitTrackAPI.DTOs.ExerciseDTOs;
 using FitTrackAPI.Mappers;
+using FitTrackAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,18 +11,22 @@ namespace FitTrackAPI.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	[Authorize( Roles = "Admin")]
-	public class ExercisesController(IExerciseRepository exerciseRepo, IMuscleGroupRepository muscleGroupRepo) : ControllerBase
+	[Authorize(Roles = "Admin")]
+	public class ExercisesController(
+		IExerciseRepository exerciseRepo,
+		IMuscleGroupRepository muscleGroupRepo,
+		BlobStorageService blobStorageService
+		) : ControllerBase
 	{
 		[HttpGet("admin")]
-		public async Task<IActionResult> GetAll([FromQuery] QueryObject query)
+		public async Task<IActionResult> GetAll()
 		{
 			if (!ModelState.IsValid)
 			{
 				return BadRequest(ModelState);
 			}
 
-			var exercises = await exerciseRepo.GetAllAsync(query);
+			var exercises = await exerciseRepo.GetAllAsync();
 
 			return Ok(exercises.Select(e => e.ToDto()).ToList());
 		}
@@ -44,25 +49,34 @@ namespace FitTrackAPI.Controllers
 		}
 
 		[HttpPost("admin")]
-		public async Task<IActionResult> Create([FromBody] CreateExerciseDto exerciseDto)
+		public async Task<IActionResult> Create([FromForm] CreateExerciseDto exerciseDto)
 		{
 			if (!ModelState.IsValid)
 			{
 				return BadRequest(ModelState);
 			}
 
-			if (!await muscleGroupRepo.MuscleGroupExist(exerciseDto.MuscleGroupName))
+			var validMuscleGroup = await muscleGroupRepo.GetByNameAsync(exerciseDto.MuscleGroupName);
+
+			if (validMuscleGroup is null)
 			{
 				return BadRequest("A muscle group with this name does not exist.");
 			}
 
-			var isExist = await exerciseRepo.GetByNameAsync(exerciseDto.Name);
-			if (isExist is not null)
+
+			var existingExercise = await exerciseRepo.GetByNameAsync(exerciseDto.Name);
+			if (existingExercise is not null)
 			{
 				return BadRequest("An exercise with this name already exists.");
 			}
 
-			var exercise = await exerciseDto.ToModelFromCreate(muscleGroupRepo);
+			string videoUrl;
+			using (var stream = exerciseDto.VideoFile?.OpenReadStream())
+			{
+				videoUrl = await blobStorageService.UploadVideoAsync(stream, exerciseDto.Name, exerciseDto.VideoFile.ContentType);
+			}
+
+			var exercise = exerciseDto.ToModelFromCreate(validMuscleGroup.Id, videoUrl);
 
 			await exerciseRepo.CreateAsync(exercise);
 
@@ -70,23 +84,33 @@ namespace FitTrackAPI.Controllers
 		}
 
 		[HttpPut("admin/{id:int}")]
-		public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateExerciseRequestDto exerciseDto)
+		public async Task<IActionResult> Update([FromRoute] int id, [FromForm] UpdateExerciseRequestDto exerciseDto)
 		{
 			if (!ModelState.IsValid)
 			{
 				return BadRequest(ModelState);
 			}
 
-			if (!await muscleGroupRepo.MuscleGroupExist(exerciseDto.MuscleGroupName))
+			var validMuscleGroup = await muscleGroupRepo.GetByNameAsync(exerciseDto.MuscleGroupName);
+			if (validMuscleGroup is null)
 			{
-				return NoContent();
+				return BadRequest("A muscle group with this name does not exist.");
 			}
 
-			var exercise = await exerciseRepo.UpdateAsync(id, await exerciseDto.ToModelFromUpdate(muscleGroupRepo));
+			string videoUrl = string.Empty;
+			if (exerciseDto.VideoFile is not null)
+			{
+				using (var stream = exerciseDto.VideoFile.OpenReadStream())
+				{
+					videoUrl = await blobStorageService.UploadVideoAsync(stream, exerciseDto.Name, exerciseDto.VideoFile.ContentType);
+				}
+			}
+
+			var exercise = await exerciseRepo.UpdateAsync(id, exerciseDto.ToModelFromUpdate(validMuscleGroup.Id, videoUrl));
 
 			if (exercise is null)
 			{
-				return NoContent();
+				return BadRequest("Can't update exercise because it does not exist.");
 			}
 
 			return Ok(exercise.ToDto());
