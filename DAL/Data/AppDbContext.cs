@@ -152,7 +152,8 @@ namespace DAL.Data
 				new Exercise(){
 					Id = 2,
 					Name = "Bench press",
-					MuscleGroupId = 1
+					MuscleGroupId = 1,
+					VideoURL = "https://fittrackmedia.blob.core.windows.net/videos/benchPress.mp4"
 				},
 				new Exercise(){
 					Id = 3,
@@ -166,8 +167,9 @@ namespace DAL.Data
 				},
 				new Exercise(){
 					Id = 5,
-					Name = "Arnold press",
-					MuscleGroupId = 6
+					Name = "Shoulder press",
+					MuscleGroupId = 6,
+					VideoURL ="https://fittrackmedia.blob.core.windows.net/videos/Shoulder%20press%20with%20dumbells"
 				},
 				new Exercise(){
 					Id = 6,

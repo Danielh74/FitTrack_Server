@@ -73,7 +73,9 @@ namespace FitTrackAPI.Controllers
 			string videoUrl;
 			using (var stream = exerciseDto.VideoFile?.OpenReadStream())
 			{
-				videoUrl = await blobStorageService.UploadVideoAsync(stream, exerciseDto.Name, exerciseDto.VideoFile.ContentType);
+				var blobType = exerciseDto.VideoFile.ContentType.Substring(exerciseDto.VideoFile.ContentType.IndexOf('/') + 1);
+				var blobName = $"{exerciseDto.Name.Replace(" ","_")}.{blobType}";
+				videoUrl = await blobStorageService.UploadVideoAsync(stream, blobName, exerciseDto.VideoFile.ContentType);
 			}
 
 			var exercise = exerciseDto.ToModelFromCreate(validMuscleGroup.Id, videoUrl);
