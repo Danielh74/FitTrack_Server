@@ -38,7 +38,7 @@ namespace DAL.Models
         //Foreign key:
         public int AppUserId { get; set; }
 
-        //Navigation property:
-        public AppUser? AppUser { get; set; }
+		//Navigation property:
+		public AppUser AppUser { get; set; } = null!;
     }
 }

@@ -58,6 +58,7 @@ public class AccountsController(
 			 .ThenInclude(pd=> pd.Exercise)
 			.Include(u => u.Menu)
 				.ThenInclude(m => m.Meals)
+			.Include(u=> u.HealthDeclaration)
 			.FirstOrDefaultAsync(u => u.Email == loginDto.Email);
 		if (user is null)
 		{
@@ -195,7 +196,10 @@ public class AccountsController(
 	[Authorize(Roles = "Admin")]
 	public async Task<IActionResult> GetAll()
 	{
-		var users = await userManager.Users.ToListAsync();
+		var users = await userManager.Users
+			.Include(u=> u.HealthDeclaration)
+			.ToListAsync();
+		
 
 		if (users.Count == 0)
 		{
@@ -223,6 +227,7 @@ public class AccountsController(
 			.Include(u => u.Plans)
 				.ThenInclude(p => p.PlanDetails)
 					.ThenInclude(pd => pd.Exercise)
+			.Include(u=> u.HealthDeclaration)
 			.FirstOrDefaultAsync(u => u.Id == userId);
 
 		if (user is null)

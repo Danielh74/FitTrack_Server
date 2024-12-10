@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class InitDB : Migration
+    public partial class initDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -29,30 +29,46 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "HealthDeclarations",
+                name: "AspNetUsers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    HeartDisease = table.Column<bool>(type: "bit", nullable: false),
-                    ChestPainInRest = table.Column<bool>(type: "bit", nullable: false),
-                    ChestPainInDaily = table.Column<bool>(type: "bit", nullable: false),
-                    ChestPainInActivity = table.Column<bool>(type: "bit", nullable: false),
-                    Dizzy = table.Column<bool>(type: "bit", nullable: false),
-                    LostConsciousness = table.Column<bool>(type: "bit", nullable: false),
-                    AsthmaTreatment = table.Column<bool>(type: "bit", nullable: false),
-                    ShortBreath = table.Column<bool>(type: "bit", nullable: false),
-                    FamilyDeathHeartDisease = table.Column<bool>(type: "bit", nullable: false),
-                    FamilySuddenEarlyAgeDeath = table.Column<bool>(type: "bit", nullable: false),
-                    TrainUnderSupervision = table.Column<bool>(type: "bit", nullable: false),
-                    ChronicIllness = table.Column<bool>(type: "bit", nullable: false),
-                    IsPregnant = table.Column<bool>(type: "bit", nullable: false),
-                    DateOfSignature = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AppUserId = table.Column<int>(type: "int", nullable: false)
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Goal = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Age = table.Column<int>(type: "int", nullable: false),
+                    Height = table.Column<int>(type: "int", nullable: false),
+                    NeckCircumference = table.Column<double>(type: "float", nullable: false),
+                    PecsCircumference = table.Column<double>(type: "float", nullable: false),
+                    WaistCircumference = table.Column<double>(type: "float", nullable: false),
+                    AbdominalCircumference = table.Column<double>(type: "float", nullable: false),
+                    HipsCircumference = table.Column<double>(type: "float", nullable: false),
+                    ThighsCircumference = table.Column<double>(type: "float", nullable: false),
+                    ArmCircumference = table.Column<double>(type: "float", nullable: false),
+                    BodyFatPrecentage = table.Column<double>(type: "float", nullable: false),
+                    AgreedToTerms = table.Column<bool>(type: "bit", nullable: false),
+                    RegistrationDate = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_HealthDeclarations", x => x.Id);
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -85,74 +101,6 @@ namespace DAL.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Goal = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Age = table.Column<int>(type: "int", nullable: false),
-                    Height = table.Column<int>(type: "int", nullable: false),
-                    NeckCircumference = table.Column<double>(type: "float", nullable: false),
-                    PecsCircumference = table.Column<double>(type: "float", nullable: false),
-                    WaistCircumference = table.Column<double>(type: "float", nullable: false),
-                    AbdominalCircumference = table.Column<double>(type: "float", nullable: false),
-                    HipsCircumference = table.Column<double>(type: "float", nullable: false),
-                    ThighsCircumference = table.Column<double>(type: "float", nullable: false),
-                    ArmCircumference = table.Column<double>(type: "float", nullable: false),
-                    BodyFatPrecentage = table.Column<double>(type: "float", nullable: false),
-                    AgreedToTerms = table.Column<bool>(type: "bit", nullable: false),
-                    HealthDeclarationId = table.Column<int>(type: "int", nullable: true),
-                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetUsers_HealthDeclarations_HealthDeclarationId",
-                        column: x => x.HealthDeclarationId,
-                        principalTable: "HealthDeclarations",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Exercises",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MuscleGroupId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Exercises", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Exercises_MuscleGroups_MuscleGroupId",
-                        column: x => x.MuscleGroupId,
-                        principalTable: "MuscleGroups",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -243,6 +191,39 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "HealthDeclarations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    HeartDisease = table.Column<bool>(type: "bit", nullable: false),
+                    ChestPainInRest = table.Column<bool>(type: "bit", nullable: false),
+                    ChestPainInDaily = table.Column<bool>(type: "bit", nullable: false),
+                    ChestPainInActivity = table.Column<bool>(type: "bit", nullable: false),
+                    Dizzy = table.Column<bool>(type: "bit", nullable: false),
+                    LostConsciousness = table.Column<bool>(type: "bit", nullable: false),
+                    AsthmaTreatment = table.Column<bool>(type: "bit", nullable: false),
+                    ShortBreath = table.Column<bool>(type: "bit", nullable: false),
+                    FamilyDeathHeartDisease = table.Column<bool>(type: "bit", nullable: false),
+                    FamilySuddenEarlyAgeDeath = table.Column<bool>(type: "bit", nullable: false),
+                    TrainUnderSupervision = table.Column<bool>(type: "bit", nullable: false),
+                    ChronicIllness = table.Column<bool>(type: "bit", nullable: false),
+                    IsPregnant = table.Column<bool>(type: "bit", nullable: false),
+                    DateOfSignature = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AppUserId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HealthDeclarations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_HealthDeclarations_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Menus",
                 columns: table => new
                 {
@@ -303,6 +284,27 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Exercises",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    VideoURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MuscleGroupId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Exercises", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Exercises_MuscleGroups_MuscleGroupId",
+                        column: x => x.MuscleGroupId,
+                        principalTable: "MuscleGroups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Meals",
                 columns: table => new
                 {
@@ -310,9 +312,9 @@ namespace DAL.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Order = table.Column<int>(type: "int", nullable: false),
-                    ProteinPoints = table.Column<int>(type: "int", nullable: false),
-                    CarbsPoints = table.Column<int>(type: "int", nullable: false),
-                    FatsPoints = table.Column<int>(type: "int", nullable: false),
+                    ProteinPoints = table.Column<int>(type: "int", nullable: true),
+                    CarbsPoints = table.Column<int>(type: "int", nullable: true),
+                    FatsPoints = table.Column<int>(type: "int", nullable: true),
                     IsCompleted = table.Column<bool>(type: "bit", nullable: false),
                     MenuId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -333,9 +335,9 @@ namespace DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Reps = table.Column<int>(type: "int", nullable: false),
-                    Sets = table.Column<int>(type: "int", nullable: false),
-                    OrderInPlan = table.Column<int>(type: "int", nullable: false),
+                    Reps = table.Column<int>(type: "int", nullable: true),
+                    Sets = table.Column<int>(type: "int", nullable: true),
+                    OrderInPlan = table.Column<int>(type: "int", nullable: true),
                     CurrentWeight = table.Column<double>(type: "float", nullable: true),
                     PreviousWeight = table.Column<double>(type: "float", nullable: true),
                     PlanId = table.Column<int>(type: "int", nullable: false),
@@ -363,17 +365,17 @@ namespace DAL.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 1, "2a865b1b-e2cc-4bac-91a9-cc2780a4848f", "Admin", "ADMIN" },
-                    { 2, "e1466bbb-ed4b-4a62-8174-4effe845446b", "User", "USER" }
+                    { 1, "babc68b5-9ab6-43a9-a743-13eab11f3839", "Admin", "ADMIN" },
+                    { 2, "b0e06b94-ab1e-4a26-aab1-d6e1494c788d", "User", "USER" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AbdominalCircumference", "AccessFailedCount", "Age", "AgreedToTerms", "ArmCircumference", "BodyFatPrecentage", "City", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "Gender", "Goal", "HealthDeclarationId", "Height", "HipsCircumference", "LastName", "LockoutEnabled", "LockoutEnd", "NeckCircumference", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PecsCircumference", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "ThighsCircumference", "TwoFactorEnabled", "UserName", "WaistCircumference" },
+                columns: new[] { "Id", "AbdominalCircumference", "AccessFailedCount", "Age", "AgreedToTerms", "ArmCircumference", "BodyFatPrecentage", "City", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "Gender", "Goal", "Height", "HipsCircumference", "LastName", "LockoutEnabled", "LockoutEnd", "NeckCircumference", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PecsCircumference", "PhoneNumber", "PhoneNumberConfirmed", "RegistrationDate", "SecurityStamp", "ThighsCircumference", "TwoFactorEnabled", "UserName", "WaistCircumference" },
                 values: new object[,]
                 {
-                    { 1, 0.0, 0, 0, false, 0.0, 0.0, "", "2acaf816-56e0-4e96-95e8-22a995fc027d", "a@gmail.com", false, "Avner", "", "", null, 0, 0.0, "Hazan", false, null, 0.0, "A@GMAIL.COM", "A@GMAIL.COM", "AQAAAAIAAYagAAAAEFBf6fAoBwONrf6C6BLX7Q7StlexkW6AacPKD4aCFAQfd2uUcpXRb75l2hzsZ05iWA==", 0.0, null, false, "e23383d7-0ee1-49f1-a7cf-accc8a2aad06", 0.0, false, "a@gmail.com", 0.0 },
-                    { 2, 0.0, 0, 24, false, 0.0, 0.0, "", "6656b06e-bc43-4f3c-b3c5-815bde1cef61", "d@gmail.com", false, "Daniel", "Male", "", null, 0, 0.0, "Hazan", false, null, 0.0, "D@GMAIL.COM", "D@GMAIL.COM", "AQAAAAIAAYagAAAAEJFzVCgBbHC7TFAMkvIr4Kd342JYIg87HkfvwQ8XnidIfH7YLa6PWrruwWbrbKfMJA==", 0.0, null, false, "cc53279d-5abd-4205-b8f5-48039122fa4c", 0.0, false, "d@gmail.com", 0.0 }
+                    { 1, 0.0, 0, 0, false, 0.0, 0.0, "", "5e7bb12b-7c36-40c5-9630-b88edba696dc", "a@gmail.com", false, "Avner", "", "", 0, 0.0, "Hazan", false, null, 0.0, "A@GMAIL.COM", "A@GMAIL.COM", "AQAAAAIAAYagAAAAEMlh7yqmDb4SHhsZJENA/0Xfv5khA7am5UY4m/KqogS1dokVW5rTUSC4WzJJKJ6KGQ==", 0.0, null, false, "", "139eb895-0408-46f3-9a12-52c34ff37860", 0.0, false, "a@gmail.com", 0.0 },
+                    { 2, 0.0, 0, 24, false, 0.0, 0.0, "", "0ea25d6b-767f-4bca-8321-2d8e2bf2c951", "d@gmail.com", false, "Daniel", "Male", "", 0, 0.0, "Hazan", false, null, 0.0, "D@GMAIL.COM", "D@GMAIL.COM", "AQAAAAIAAYagAAAAEJ1SIdWdhfjPfZNSWi/3mP5oUmFdyeOknBuYQnZfANx+BKElCExSCy00N1Xq8Yk8eA==", 0.0, null, false, "10/12/2024", "eeb82654-5927-4dae-b5fc-cd74ebf19a8e", 0.0, false, "d@gmail.com", 0.0 }
                 });
 
             migrationBuilder.InsertData(
@@ -401,16 +403,16 @@ namespace DAL.Migrations
 
             migrationBuilder.InsertData(
                 table: "Exercises",
-                columns: new[] { "Id", "MuscleGroupId", "Name" },
+                columns: new[] { "Id", "MuscleGroupId", "Name", "VideoURL" },
                 values: new object[,]
                 {
-                    { 1, 7, "Leg curls" },
-                    { 2, 1, "Bench press" },
-                    { 3, 3, "Hammer curls" },
-                    { 4, 4, "Skull Crushers" },
-                    { 5, 6, "Arnold press" },
-                    { 6, 5, "Plank" },
-                    { 7, 2, "Pull-down" }
+                    { 1, 7, "Leg curls", "" },
+                    { 2, 1, "Bench press", "https://fittrackmedia.blob.core.windows.net/videos/benchPress.mp4" },
+                    { 3, 3, "Hammer curls", "" },
+                    { 4, 4, "Skull Crushers", "" },
+                    { 5, 6, "Shoulder press", "https://fittrackmedia.blob.core.windows.net/videos/Shoulder_press_with_dumbells.mp4" },
+                    { 6, 5, "Plank", "" },
+                    { 7, 2, "Pull-down", "" }
                 });
 
             migrationBuilder.InsertData(
@@ -466,13 +468,6 @@ namespace DAL.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_HealthDeclarationId",
-                table: "AspNetUsers",
-                column: "HealthDeclarationId",
-                unique: true,
-                filter: "[HealthDeclarationId] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
@@ -483,6 +478,12 @@ namespace DAL.Migrations
                 name: "IX_Exercises_MuscleGroupId",
                 table: "Exercises",
                 column: "MuscleGroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HealthDeclarations_AppUserId",
+                table: "HealthDeclarations",
+                column: "AppUserId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Meals_MenuId",
@@ -535,6 +536,9 @@ namespace DAL.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "HealthDeclarations");
+
+            migrationBuilder.DropTable(
                 name: "Meals");
 
             migrationBuilder.DropTable(
@@ -560,9 +564,6 @@ namespace DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "HealthDeclarations");
         }
     }
 }

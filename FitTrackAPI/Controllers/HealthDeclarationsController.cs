@@ -28,7 +28,7 @@ namespace FitTrackAPI.Controllers
 			return Ok(healthDecs.Select(h=> h.ToDto()));
 		}
 
-		[HttpGet("admin/{userId}")]
+		[HttpGet("admin/user/{userId}")]
 		[Authorize(Roles ="Admin")]
 		public async Task<IActionResult> GetByUserId(int userId)
 		{
@@ -36,7 +36,21 @@ namespace FitTrackAPI.Controllers
 
 			if(healthDec is null)
 			{
-				return NoContent();
+				return NotFound("User does not have health declaration");
+			}
+
+			return Ok(healthDec.ToDto());
+		}
+
+		[HttpGet("admin/{Id}")]
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> GetById(int id)
+		{
+			var healthDec = await repo.GetByIdAsync(id);
+
+			if (healthDec is null)
+			{
+				return NotFound("Health declaration does not exist");
 			}
 
 			return Ok(healthDec.ToDto());
@@ -53,16 +67,16 @@ namespace FitTrackAPI.Controllers
 			var userEmail = User.FindFirstValue(ClaimTypes.Email);
 			if (userEmail is null)
 			{
-				return NoContent();
+				return NotFound("Email does not exist in database.");
 			}
 
 			var user = await userManager.FindByEmailAsync(userEmail);
 			if (user is null)
 			{
-				return NoContent();
+				return NotFound("User not found for the given email.");
 			}
 
-			if (user.HealthDeclarationId is not null)
+			if (user.HealthDeclaration is not null)
 			{
 				return BadRequest("User already has a health declaration");
 			}
@@ -71,10 +85,7 @@ namespace FitTrackAPI.Controllers
 
 			var result = await repo.CreateAsync(healthDec);
 
-			user.HealthDeclarationId = result.Id;
-			await userManager.UpdateAsync(user);
-
-			return Created();
+			return CreatedAtAction(nameof(GetById), new { id = result.Id }, result.ToDto());
 		}
 
 		[HttpDelete("admin/{id}")]
@@ -85,13 +96,6 @@ namespace FitTrackAPI.Controllers
 			if (healthDec is null)
 			{
 				return NoContent();
-			}
-
-			var user = await userManager.Users.FirstOrDefaultAsync(u => u.HealthDeclarationId == id);
-			if (user is not null)
-			{
-				user.HealthDeclarationId = null;
-				await userManager.UpdateAsync(user);
 			}
 
 			await repo.DeleteAsync(healthDec);

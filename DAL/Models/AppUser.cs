@@ -26,9 +26,6 @@ namespace DAL.Models
 
 		public string RegistrationDate { get; set; } = string.Empty;
 
-        //Foreign Keys:
-        public int? HealthDeclarationId { get; set; }
-
         //Navigation props:
         public HealthDeclaration? HealthDeclaration { get; set; }
 		public List<Plan> Plans { get; set; } = [];

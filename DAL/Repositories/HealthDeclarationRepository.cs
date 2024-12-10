@@ -37,7 +37,9 @@ namespace DAL.Repositories
 
 		public async Task<HealthDeclaration?> GetByIdAsync(int id)
 		{
-			var healthDec = await context.HealthDeclarations.FindAsync(id);
+			var healthDec = await context.HealthDeclarations
+				.Include(hd=> hd.AppUser)
+				.FirstOrDefaultAsync(hd=> hd.Id == id);
 			if (healthDec is null)
 			{
 				return null;
@@ -48,7 +50,9 @@ namespace DAL.Repositories
 
 		public async Task<HealthDeclaration?> GetByUserIdAsync(int userId)
 		{
-			var healthDec = await context.HealthDeclarations.FirstOrDefaultAsync(hd => hd.AppUserId == userId);
+			var healthDec = await context.HealthDeclarations
+				.Include(hd=> hd.AppUser)
+				.FirstOrDefaultAsync(hd => hd.AppUserId == userId);
 			if (healthDec is null)
 			{
 				return null;

@@ -27,7 +27,7 @@ namespace DAL.Data
 
 			builder.Entity<AppUser>().HasOne(u => u.HealthDeclaration)
 				.WithOne(h => h.AppUser)
-				.HasForeignKey<AppUser>(u => u.HealthDeclarationId);
+				.HasForeignKey<HealthDeclaration>(h => h.AppUserId);
 
 			builder.Entity<PlanDetails>().HasOne(pd => pd.Exercise)
 				.WithMany(e => e.PlanDetails)
@@ -169,7 +169,7 @@ namespace DAL.Data
 					Id = 5,
 					Name = "Shoulder press",
 					MuscleGroupId = 6,
-					VideoURL ="https://fittrackmedia.blob.core.windows.net/videos/Shoulder%20press%20with%20dumbells"
+					VideoURL ="https://fittrackmedia.blob.core.windows.net/videos/Shoulder_press_with_dumbells.mp4"
 				},
 				new Exercise(){
 					Id = 6,

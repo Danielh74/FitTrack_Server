@@ -75,9 +75,6 @@ namespace DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("HealthDeclarationId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Height")
                         .HasColumnType("int");
 
@@ -139,10 +136,6 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("HealthDeclarationId")
-                        .IsUnique()
-                        .HasFilter("[HealthDeclarationId] IS NOT NULL");
-
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -164,7 +157,7 @@ namespace DAL.Migrations
                             ArmCircumference = 0.0,
                             BodyFatPrecentage = 0.0,
                             City = "",
-                            ConcurrencyStamp = "fa2329f2-ae28-4d04-8135-a043b09c742c",
+                            ConcurrencyStamp = "5e7bb12b-7c36-40c5-9630-b88edba696dc",
                             Email = "a@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Avner",
@@ -177,11 +170,11 @@ namespace DAL.Migrations
                             NeckCircumference = 0.0,
                             NormalizedEmail = "A@GMAIL.COM",
                             NormalizedUserName = "A@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEM1YoOyUXKEabUjeRdYgYyvIA0TsbZjfeyUJl2tXDNwPOs7APZ93NyJ+jWg75rq51w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMlh7yqmDb4SHhsZJENA/0Xfv5khA7am5UY4m/KqogS1dokVW5rTUSC4WzJJKJ6KGQ==",
                             PecsCircumference = 0.0,
                             PhoneNumberConfirmed = false,
                             RegistrationDate = "",
-                            SecurityStamp = "d3972875-d4e6-485f-b27e-f0c9d8711546",
+                            SecurityStamp = "139eb895-0408-46f3-9a12-52c34ff37860",
                             ThighsCircumference = 0.0,
                             TwoFactorEnabled = false,
                             UserName = "a@gmail.com",
@@ -197,7 +190,7 @@ namespace DAL.Migrations
                             ArmCircumference = 0.0,
                             BodyFatPrecentage = 0.0,
                             City = "",
-                            ConcurrencyStamp = "719082cc-2902-4043-afba-e7a9a86409b8",
+                            ConcurrencyStamp = "0ea25d6b-767f-4bca-8321-2d8e2bf2c951",
                             Email = "d@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Daniel",
@@ -210,11 +203,11 @@ namespace DAL.Migrations
                             NeckCircumference = 0.0,
                             NormalizedEmail = "D@GMAIL.COM",
                             NormalizedUserName = "D@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEPqfh32oXJUk4bS3NM//E7u56dVDfz4fqLMNyy8Fjje3Gud0CeynE8gzfJmp1Fw6g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJ1SIdWdhfjPfZNSWi/3mP5oUmFdyeOknBuYQnZfANx+BKElCExSCy00N1Xq8Yk8eA==",
                             PecsCircumference = 0.0,
                             PhoneNumberConfirmed = false,
-                            RegistrationDate = "",
-                            SecurityStamp = "dbb68d3e-9af5-4fb6-9ae4-20f0fd2f656c",
+                            RegistrationDate = "10/12/2024",
+                            SecurityStamp = "eeb82654-5927-4dae-b5fc-cd74ebf19a8e",
                             ThighsCircumference = 0.0,
                             TwoFactorEnabled = false,
                             UserName = "d@gmail.com",
@@ -237,6 +230,10 @@ namespace DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("VideoURL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("MuscleGroupId");
@@ -248,43 +245,50 @@ namespace DAL.Migrations
                         {
                             Id = 1,
                             MuscleGroupId = 7,
-                            Name = "Leg curls"
+                            Name = "Leg curls",
+                            VideoURL = ""
                         },
                         new
                         {
                             Id = 2,
                             MuscleGroupId = 1,
-                            Name = "Bench press"
+                            Name = "Bench press",
+                            VideoURL = "https://fittrackmedia.blob.core.windows.net/videos/benchPress.mp4"
                         },
                         new
                         {
                             Id = 3,
                             MuscleGroupId = 3,
-                            Name = "Hammer curls"
+                            Name = "Hammer curls",
+                            VideoURL = ""
                         },
                         new
                         {
                             Id = 4,
                             MuscleGroupId = 4,
-                            Name = "Skull Crushers"
+                            Name = "Skull Crushers",
+                            VideoURL = ""
                         },
                         new
                         {
                             Id = 5,
                             MuscleGroupId = 6,
-                            Name = "Arnold press"
+                            Name = "Shoulder press",
+                            VideoURL = "https://fittrackmedia.blob.core.windows.net/videos/Shoulder_press_with_dumbells.mp4"
                         },
                         new
                         {
                             Id = 6,
                             MuscleGroupId = 5,
-                            Name = "Plank"
+                            Name = "Plank",
+                            VideoURL = ""
                         },
                         new
                         {
                             Id = 7,
                             MuscleGroupId = 2,
-                            Name = "Pull-down"
+                            Name = "Pull-down",
+                            VideoURL = ""
                         });
                 });
 
@@ -342,6 +346,9 @@ namespace DAL.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId")
+                        .IsUnique();
 
                     b.ToTable("HealthDeclarations");
                 });
@@ -633,14 +640,14 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "f09165b2-63d5-428f-b07c-f6817d2dfed7",
+                            ConcurrencyStamp = "babc68b5-9ab6-43a9-a743-13eab11f3839",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "9d512c50-03cb-472b-9dbc-188f86af8b73",
+                            ConcurrencyStamp = "b0e06b94-ab1e-4a26-aab1-d6e1494c788d",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -761,15 +768,6 @@ namespace DAL.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("DAL.Models.AppUser", b =>
-                {
-                    b.HasOne("DAL.Models.HealthDeclaration", "HealthDeclaration")
-                        .WithOne("AppUser")
-                        .HasForeignKey("DAL.Models.AppUser", "HealthDeclarationId");
-
-                    b.Navigation("HealthDeclaration");
-                });
-
             modelBuilder.Entity("DAL.Models.Exercise", b =>
                 {
                     b.HasOne("DAL.Models.MuscleGroup", "MuscleGroup")
@@ -779,6 +777,17 @@ namespace DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("MuscleGroup");
+                });
+
+            modelBuilder.Entity("DAL.Models.HealthDeclaration", b =>
+                {
+                    b.HasOne("DAL.Models.AppUser", "AppUser")
+                        .WithOne("HealthDeclaration")
+                        .HasForeignKey("DAL.Models.HealthDeclaration", "AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("DAL.Models.Meal", b =>
@@ -893,6 +902,8 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Models.AppUser", b =>
                 {
+                    b.Navigation("HealthDeclaration");
+
                     b.Navigation("Menu");
 
                     b.Navigation("Plans");
@@ -903,11 +914,6 @@ namespace DAL.Migrations
             modelBuilder.Entity("DAL.Models.Exercise", b =>
                 {
                     b.Navigation("PlanDetails");
-                });
-
-            modelBuilder.Entity("DAL.Models.HealthDeclaration", b =>
-                {
-                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("DAL.Models.Menu", b =>

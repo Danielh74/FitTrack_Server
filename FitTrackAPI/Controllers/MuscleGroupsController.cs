@@ -1,5 +1,4 @@
-﻿using DAL.Helpers;
-using DAL.Interfaces;
+﻿using DAL.Interfaces;
 using FitTrackAPI.DTOs.MuscleGroupDTOs;
 using FitTrackAPI.Mappers;
 using Microsoft.AspNetCore.Authorization;

@@ -45,10 +45,10 @@ namespace FitTrackAPI.Mappers
 				ArmCircumference = model.ArmCircumference,
 				BodyFatPrecentage = model.BodyFatPrecentage,
 				AgreedToTerms = model.AgreedToTerms,
-				HealthDeclarationId = model.HealthDeclarationId,
 				RegistrationDate = model.RegistrationDate,
 				Plans = model.Plans.Select(p=> p.ToPlanDto()).ToList(),
-				Menu = model.Menu?.ToDto()
+				Menu = model.Menu?.ToDto(),
+				HealthDeclarationId = model.HealthDeclaration?.Id
 			};
 		}
 
@@ -63,8 +63,8 @@ namespace FitTrackAPI.Mappers
 				City = model.City,
 				Age = model.Age,
 				AgreedToTerms = model.AgreedToTerms,
-				HealthDeclarationId = model.HealthDeclarationId,
-				RegistrationDate = model.RegistrationDate
+				RegistrationDate = model.RegistrationDate,
+				HealthDeclarationId= model.HealthDeclaration?.Id
 			};
 		}
 	}
