@@ -1,0 +1,6 @@
+services:
+  fittrackapi:
+    image: ${DOCKER_REGISTRY-}fittrackapi
+    build:
+      context: .
+      dockerfile: FitTrackAPI\Dockerfile
