@@ -77,7 +77,7 @@ namespace FitTrackAPI.Controllers
 			using (var stream = exerciseDto.VideoFile?.OpenReadStream())
 			{
 				var blobType = exerciseDto.VideoFile.ContentType.Substring(exerciseDto.VideoFile.ContentType.IndexOf('/') + 1);
-				var blobName = $"{exerciseDto.Name.Replace(" ","_")}.{blobType}";
+				var blobName = $"{exerciseDto.Name.Replace(" ", "_")}.{blobType}";
 				videoUrl = await blobStorageService.UploadVideoAsync(stream, blobName, exerciseDto.VideoFile.ContentType);
 			}
 
@@ -107,7 +107,9 @@ namespace FitTrackAPI.Controllers
 			{
 				using (var stream = exerciseDto.VideoFile.OpenReadStream())
 				{
-					videoUrl = await blobStorageService.UploadVideoAsync(stream, exerciseDto.Name, exerciseDto.VideoFile.ContentType);
+					var blobType = exerciseDto.VideoFile.ContentType.Substring(exerciseDto.VideoFile.ContentType.IndexOf('/') + 1);
+					var blobName = $"{exerciseDto.Name.Replace(" ", "_")}.{blobType}";
+					videoUrl = await blobStorageService.UploadVideoAsync(stream, blobName, exerciseDto.VideoFile.ContentType);
 				}
 			}
 
@@ -136,6 +138,11 @@ namespace FitTrackAPI.Controllers
 			}
 
 			await exerciseRepo.DeleteAsync(exercise);
+
+			int nameStartIndex = exercise.VideoURL.LastIndexOf('/') + 1;
+			string blobName = exercise.VideoURL.Substring(nameStartIndex);
+
+			await blobStorageService.DeleteVideoAsync(blobName);
 
 			return Ok("Exercise deleted successfully");
 		}
