@@ -34,7 +34,7 @@ namespace FitTrackAPI.Controllers
 			var menu = await repo.GetByUserIdAsync(userId);
 			if (menu is null)
 			{
-				return NoContent();
+				return NotFound("Menu was not found.");
 			}
 
 			var validLoggedInUserId = int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier),out int loggedInUserId);
@@ -64,7 +64,7 @@ namespace FitTrackAPI.Controllers
 			var validUser = await userManager.Users.FirstOrDefaultAsync(u => u.Id == dto.UserId);
 			if (validUser is null)
 			{
-				return BadRequest($"User with Id {dto.UserId} was not found.");
+				return NotFound($"User with Id {dto.UserId} was not found.");
 			}
 
 			var existingMenu = await repo.GetByUserIdAsync(dto.UserId);
@@ -85,7 +85,7 @@ namespace FitTrackAPI.Controllers
 			var menu = await repo.GetByIdAsync(id);
 			if (menu is null)
 			{
-				return NoContent();
+				return NotFound("Menu  was not found");
 			}
 
 			await repo.DeleteAsync(menu);

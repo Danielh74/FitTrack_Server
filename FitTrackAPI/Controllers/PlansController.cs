@@ -80,7 +80,7 @@ namespace FitTrackAPI.Controllers
 			var validUser = await userManager.Users.FirstOrDefaultAsync(u => u.Id == planDto.UserId);
 			if (validUser is null)
 			{
-				return BadRequest($"User with Id {planDto.UserId} was not found.");
+				return NotFound($"User with Id {planDto.UserId} was not found.");
 			}
 
 			var plan = await repo.CreateAsync(planDto.ToModelFromCreate());
@@ -99,7 +99,7 @@ namespace FitTrackAPI.Controllers
 			var plan = await repo.UpdateAsync(id, planDto.ToModelFromUpdate());
 			if (plan is null)
 			{
-				return NoContent();
+				return NotFound("Plan was not found");
 			}
 
 			return Ok(plan.ToPlanDto());
@@ -112,7 +112,7 @@ namespace FitTrackAPI.Controllers
 			var plan = await repo.GetByIdAsync(id);
 			if (plan is null)
 			{
-				return NoContent();
+				return NotFound("Plan was not found");
 			}
 
 			await repo.DeleteAsync(plan);

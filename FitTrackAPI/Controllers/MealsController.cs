@@ -31,7 +31,7 @@ namespace FitTrackAPI.Controllers
 			var meal = await repo.GetByIdAsync(id);
 			if (meal is null)
 			{
-				return NoContent();
+				return NotFound("Meal was not found.");
 			}
 
 			return Ok(meal.ToDto());
@@ -67,7 +67,7 @@ namespace FitTrackAPI.Controllers
 			var meal = await repo.UpdateAsync(id, updateDto.ToModelFromUpdate());
 			if (meal is null)
 			{
-				return NoContent();
+				return NotFound("Meal was not found.");
 			}
 
 			return Ok(meal.ToDto());
@@ -81,7 +81,7 @@ namespace FitTrackAPI.Controllers
 			var meal = await repo.GetByIdAsync(id);
 			if (meal is null)
 			{
-				return NoContent();
+				return NotFound("Meal was not found.");
 			}
 
 			await repo.DeleteAsync(meal);

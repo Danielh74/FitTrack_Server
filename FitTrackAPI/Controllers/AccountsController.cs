@@ -62,13 +62,13 @@ public class AccountsController(
 			.FirstOrDefaultAsync(u => u.Email == loginDto.Email);
 		if (user is null)
 		{
-			return Unauthorized("User does not exist.");
+			return Unauthorized("The email or password you entered is incorrect.");
 		}
 
 		var signInResult = await signInManager.PasswordSignInAsync(user, loginDto.Password, false, false);
 		if (!signInResult.Succeeded)
 		{
-			return Unauthorized("User does not exist.");
+			return Unauthorized("The email or password you entered is incorrect.");
 		}
 
 		var token = await tokenService.CreateTokenAsync(user);

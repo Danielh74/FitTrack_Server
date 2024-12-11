@@ -26,6 +26,11 @@ namespace FitTrackAPI.Controllers
 
 			var exercises = await exerciseRepo.GetAllAsync();
 
+			if (exercises is null)
+			{
+				return NoContent();
+			}
+
 			return Ok(exercises.Select(e => e.ToDto()).ToList());
 		}
 
@@ -40,7 +45,7 @@ namespace FitTrackAPI.Controllers
 			var exercise = await exerciseRepo.GetByIdAsync(id);
 			if (exercise is null)
 			{
-				return NoContent();
+				return NotFound("Exercise was not found");
 			}
 
 			return Ok(exercise.ToDto());
@@ -58,7 +63,7 @@ namespace FitTrackAPI.Controllers
 
 			if (validMuscleGroup is null)
 			{
-				return BadRequest("A muscle group with this name does not exist.");
+				return NotFound("A muscle group with this name does not exist.");
 			}
 
 
@@ -94,7 +99,7 @@ namespace FitTrackAPI.Controllers
 			var validMuscleGroup = await muscleGroupRepo.GetByNameAsync(exerciseDto.MuscleGroupName);
 			if (validMuscleGroup is null)
 			{
-				return BadRequest("A muscle group with this name does not exist.");
+				return NotFound("A muscle group with this name does not exist.");
 			}
 
 			string videoUrl = string.Empty;
@@ -127,7 +132,7 @@ namespace FitTrackAPI.Controllers
 			var exercise = await exerciseRepo.GetByIdAsync(id);
 			if (exercise is null)
 			{
-				return NoContent();
+				return NotFound("Exercise was not found");
 			}
 
 			await exerciseRepo.DeleteAsync(exercise);

@@ -30,7 +30,7 @@ namespace FitTrackAPI.Controllers
 			var planDetails = await repo.GetByIdAsync(id);
 			if (planDetails is null)
 			{
-				return NoContent();
+				return NotFound("Plan exercise was not found");
 			}
 
 			return Ok(planDetails.ToDto());
@@ -60,13 +60,13 @@ namespace FitTrackAPI.Controllers
 
 			if(!User.IsInRole("Admin") && (dto.OrderInPlan.HasValue || dto.Sets.HasValue || dto.Reps.HasValue)) 
 			{
-				return Unauthorized("User is not authorized to change these fields");
+				return Forbid();
 			}
 
 			var planDetails = await repo.UpdateAsync(id,dto.ToModelFromUpdate());
 			if(planDetails is null)
 			{
-				return NoContent();
+				return NotFound("Plan exercise was not found");
 			}
 			return Ok(planDetails.ToDto());
 		}
@@ -79,7 +79,7 @@ namespace FitTrackAPI.Controllers
 			var planDetails = await repo.GetByIdAsync(id);
 			if (planDetails is null)
 			{
-				return NoContent();
+				return NotFound("Plan exercise was not found");
 			}
 
 			await repo.DeleteAsync(planDetails);

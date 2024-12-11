@@ -95,7 +95,7 @@ namespace FitTrackAPI.Controllers
 			var healthDec = await repo.GetByIdAsync(id);
 			if (healthDec is null)
 			{
-				return NoContent();
+				return NotFound("Health declaration was not found.");
 			}
 
 			await repo.DeleteAsync(healthDec);
