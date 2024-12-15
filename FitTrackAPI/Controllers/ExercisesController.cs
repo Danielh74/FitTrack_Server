@@ -73,12 +73,15 @@ namespace FitTrackAPI.Controllers
 				return BadRequest("An exercise with this name already exists.");
 			}
 
-			string videoUrl;
-			using (var stream = exerciseDto.VideoFile?.OpenReadStream())
+			string videoUrl = string.Empty;
+			if (exerciseDto.VideoFile is not null)
 			{
-				var blobType = exerciseDto.VideoFile.ContentType.Substring(exerciseDto.VideoFile.ContentType.IndexOf('/') + 1);
-				var blobName = $"{exerciseDto.Name.Replace(" ", "_")}.{blobType}";
-				videoUrl = await blobStorageService.UploadVideoAsync(stream, blobName, exerciseDto.VideoFile.ContentType);
+				using (var stream = exerciseDto.VideoFile?.OpenReadStream())
+				{
+					var blobType = exerciseDto.VideoFile.ContentType.Substring(exerciseDto.VideoFile.ContentType.IndexOf('/') + 1);
+					var blobName = $"{exerciseDto.Name.Replace(" ", "_")}.{blobType}";
+					videoUrl = await blobStorageService.UploadVideoAsync(stream, blobName, exerciseDto.VideoFile.ContentType);
+				}
 			}
 
 			var exercise = exerciseDto.ToModelFromCreate(validMuscleGroup.Id, videoUrl);
@@ -113,14 +116,14 @@ namespace FitTrackAPI.Controllers
 				}
 			}
 
-			var exercise = await exerciseRepo.UpdateAsync(id, exerciseDto.ToModelFromUpdate(validMuscleGroup.Id, videoUrl));
+			var updatedExercise = await exerciseRepo.UpdateAsync(id, exerciseDto.ToModelFromUpdate(validMuscleGroup.Id, videoUrl));
 
-			if (exercise is null)
+			if (updatedExercise is null)
 			{
 				return BadRequest("Can't update exercise because it does not exist.");
 			}
 
-			return Ok(exercise.ToDto());
+			return Ok(updatedExercise.ToDto());
 		}
 
 		[HttpDelete("admin/{id:int}")]
